@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoBrief — 客户会议开完，项目简报已经写好了</title>
+<meta name="description" content="接入会议录音，自动整理成客户能直接看的项目简报：决议、待办、负责人、时间点，一页交付。">
+<!--
+  =====================================================================
+  预售落地页模板 · 单文件无依赖 · 直接改文案就能用
+  ---------------------------------------------------------------------
+  模块顺序（对应文档第六节，别随意调换）：
+    1 顶部预售条   2 首屏   3 问题共鸣   4 三步上手
+    5 前后对比     6 能力清单   7 定价预售   8 创始人说明
+    9 FAQ         10 底部 CTA   11 页脚
+  ---------------------------------------------------------------------
+  上线前必改的 7 处：
+    · <title> 和 meta description
+    · 首屏 H1 / 副标题 / 产品图（.mock 是 CSS 画的，也可以换成截图）
+    · 预售条里的名额、截止日、交付日
+    · 定价区的价格、正式价锚点、交付日
+    · 退款承诺（必须无条件，别加"需说明原因"）
+    · 创始人说明里的照片和第一人称段落
+    · 支付外链：搜 PAYMENT_LINK 全部替换成真实地址
+  =====================================================================
+-->
+<style>
+  :root{
+    --ink:#14130f;
+    --ink-2:#4a4740;
+    --muted:#7d7a72;
+    --bg:#fbfaf7;
+    --card:#ffffff;
+    --line:#e6e2d9;
+    --accent:#c8452a;
+    --accent-dk:#a8361f;
+    --soft:#f4f1e9;
+    --radius:14px;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:16px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  section{padding:88px 0}
+  @media(max-width:720px){section{padding:56px 0}}
+
+  /* ---------- 1. 顶部预售条 ---------- */
+  .topbar{
+    background:var(--ink);color:#f2efe6;
+    font-size:13px;letter-spacing:.02em;
+    text-align:center;padding:10px 16px;
+  }
+  .topbar b{color:#fff;font-weight:600}
+  .topbar span{opacity:.62;margin:0 8px}
+
+  /* ---------- 导航 ---------- */
+  nav{position:sticky;top:0;z-index:20;background:rgba(251,250,247,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:650;font-size:16.5px;letter-spacing:-.01em}
+  .logo i{display:block;width:11px;height:11px;background:var(--accent);border-radius:3px;transform:rotate(45deg)}
+  .nav-cta{font-size:14px;font-weight:560;text-decoration:none;color:#fff;background:var(--ink);padding:9px 18px;border-radius:9px}
+  .nav-cta:hover{background:#2a2823}
+
+  /* ---------- 2. 首屏 ---------- */
+  .hero{padding:76px 0 84px}
+  @media(max-width:720px){.hero{padding:44px 0 52px}}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.02fr;gap:56px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);background:rgba(200,69,42,.07);
+    border:1px solid rgba(200,69,42,.18);
+    padding:5px 11px;border-radius:100px;margin-bottom:22px;
+  }
+  h1{
+    font-size:clamp(2.05rem,4.3vw,3.25rem);
+    line-height:1.1;letter-spacing:-.028em;font-weight:680;
+  }
+  h1 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:clamp(1rem,1.5vw,1.12rem);color:var(--ink-2);margin-top:22px;max-width:34em}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:32px}
+  .btn{
+    display:inline-block;text-decoration:none;font-weight:600;font-size:15.5px;
+    padding:14px 26px;border-radius:10px;transition:.16s ease;
+    border:1px solid transparent;
+  }
+  .btn-p{background:var(--accent);color:#fff;box-shadow:0 8px 22px -8px rgba(200,69,42,.6)}
+  .btn-p:hover{background:var(--accent-dk);transform:translateY(-1px)}
+  .btn-s{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn-s:hover{background:#fff;border-color:#cfc9ba}
+  .micro{margin-top:20px;font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .dot-live{width:6px;height:6px;border-radius:50%;background:#2f9e5f;box-shadow:0 0 0 3px rgba(47,158,95,.15)}
+  .micro b{color:var(--ink);font-weight:600}
+
+  /* 产品形态图：纯 CSS 画的，可直接换成 <img> */
+  .mock{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 30px 70px -28px rgba(20,19,15,.28),0 2px 6px rgba(20,19,15,.04);
+    overflow:hidden;
+  }
+  .mock-bar{height:34px;background:var(--soft);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:0 13px}
+  .mock-bar i{width:8px;height:8px;border-radius:50%;background:#d8d3c6;display:block}
+  .mock-bar u{flex:1;height:11px;background:#eae5d8;border-radius:3px;margin-left:8px;text-decoration:none}
+  .mock-body{display:grid;grid-template-columns:118px 1fr;min-height:290px}
+  .mock-side{background:#fcfbf7;border-right:1px solid var(--line);padding:16px 12px}
+  .mock-side div{height:8px;background:#e8e3d5;border-radius:3px;margin-bottom:11px}
+  .mock-side div:nth-child(1){width:70%;background:#d9d2c0}
+  .mock-side div:nth-child(2){width:88%}
+  .mock-side div:nth-child(3){width:62%;background:rgba(200,69,42,.35)}
+  .mock-side div:nth-child(4){width:80%}
+  .mock-side div:nth-child(5){width:55%}
+  .mock-side div:nth-child(6){width:74%}
+  .mock-main{padding:20px 20px}
+  .mock-h{height:12px;width:44%;background:#c9c2ae;border-radius:3px;margin-bottom:16px}
+  .mock-line{height:7px;background:#eee9db;border-radius:3px;margin-bottom:10px}
+  .mock-line.w1{width:96%}.mock-line.w2{width:88%}.mock-line.w3{width:92%}.mock-line.w4{width:64%}
+  .mock-tag{display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.04em;
+    color:var(--accent);background:rgba(200,69,42,.09);border-radius:4px;padding:2px 6px;margin:10px 0 12px}
+  .mock-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+  .mock-row s{width:12px;height:12px;border-radius:3px;background:#e6e1d2;display:block;flex:0 0 auto}
+  .mock-row s.on{background:#2f9e5f;opacity:.75}
+  .mock-row em{height:7px;background:#eee9db;border-radius:3px;display:block}
+
+  /* ---------- 通用小节标题 ---------- */
+  .sec-h{font-size:clamp(1.55rem,2.6vw,2.05rem);line-height:1.16;letter-spacing:-.022em;font-weight:660;max-width:20em}
+  .sec-p{color:var(--ink-2);margin-top:14px;max-width:36em}
+  .sec-top{margin-bottom:44px}
+
+  /* ---------- 3. 问题共鸣 ---------- */
+  .prob{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:820px){.prob-grid{grid-template-columns:1fr}}
+  .prob-card{padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg)}
+  .prob-card h4{font-size:15.5px;font-weight:650;margin-bottom:9px;letter-spacing:-.01em}
+  .prob-card p{font-size:14.5px;color:var(--ink-2)}
+
+  /* ---------- 4. 三步 ---------- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  @media(max-width:820px){.steps{grid-template-columns:1fr;gap:22px}}
+  .step .num{
+    width:34px;height:34px;border-radius:9px;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:650;
+    margin-bottom:16px;
+  }
+  .step h4{font-size:16px;font-weight:650;margin-bottom:7px;letter-spacing:-.01em}
+  .step p{font-size:14.5px;color:var(--ink-2)}
+
+  /* ---------- 5. 前后对比 ---------- */
+  .cmp{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cmp-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:820px){.cmp-grid{grid-template-columns:1fr}}
+  .cmp-col{padding:30px;border-radius:var(--radius);border:1px solid var(--line)}
+  .cmp-col.now{background:var(--bg)}
+  .cmp-col.after{background:#fff;border-color:rgba(200,69,42,.28);box-shadow:0 18px 40px -26px rgba(200,69,42,.5)}
+  .cmp-col h4{font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:650;margin-bottom:20px;color:var(--muted)}
+  .cmp-col.after h4{color:var(--accent)}
+  .cmp-col ul{list-style:none;display:grid;gap:14px}
+  .cmp-col li{display:flex;gap:11px;font-size:14.8px;color:var(--ink-2);line-height:1.55}
+  .cmp-col li i{flex:0 0 auto;width:17px;height:17px;border-radius:50%;margin-top:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-style:normal;font-weight:700}
+  .now li i{background:var(--soft);color:#a8a294}
+  .after li i{background:rgba(200,69,42,.1);color:var(--accent)}
+
+  /* ---------- 6. 能力清单 ---------- */
+  .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  @media(max-width:720px){.feat-grid{grid-template-columns:1fr}}
+  .feat{background:var(--bg);padding:28px}
+  .feat h4{font-size:15.5px;font-weight:650;margin-bottom:8px;letter-spacing:-.01em}
+  .feat p{font-size:14.3px;color:var(--ink-2)}
+  .feat p b{color:var(--ink);font-weight:600}
+
+  /* ---------- 7. 定价预售 ---------- */
+  .price-sec{background:var(--ink);color:#f4f1e9}
+  .price-sec .sec-h{color:#fff}
+  .price-sec .sec-p{color:#b6b1a4}
+  .price-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+  @media(max-width:860px){.price-wrap{grid-template-columns:1fr}}
+  .price-card{
+    background:#fff;color:var(--ink);border-radius:16px;padding:34px;
+    border:1px solid rgba(255,255,255,.1);
+  }
+  .price-badge{display:inline-block;font-size:11.5px;font-weight:650;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);background:rgba(200,69,42,.09);padding:5px 10px;border-radius:6px;margin-bottom:20px}
+  .price-num{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .price-num b{font-size:46px;font-weight:680;letter-spacing:-.03em;line-height:1}
+  .price-num span{font-size:14px;color:var(--muted)}
+  .price-anchor{font-size:13.5px;color:var(--muted);margin-bottom:24px}
+  .price-anchor s{color:#b5b0a4}
+  .price-list{list-style:none;display:grid;gap:11px;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:24px}
+  .price-list li{display:flex;gap:10px;font-size:14.3px;color:var(--ink-2)}
+  .price-list li i{color:var(--accent);font-style:normal;font-weight:700;flex:0 0 auto}
+  .price-card .btn{display:block;text-align:center;width:100%}
+  .guarantee{margin-top:16px;font-size:12.8px;color:var(--muted);text-align:center;line-height:1.6}
+  .side-note{border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:26px;background:rgba(255,255,255,.03)}
+  .side-note h4{font-size:14.5px;font-weight:650;color:#fff;margin-bottom:14px}
+  .side-note dl{display:grid;gap:15px}
+  .side-note dt{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#8d8878;margin-bottom:3px}
+  .side-note dd{font-size:14.2px;color:#d9d4c6;line-height:1.5}
+  .slots{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12)}
+  .slots-top{display:flex;justify-content:space-between;font-size:12.5px;color:#8d8878;margin-bottom:8px}
+  .slots-top b{color:#f4f1e9;font-weight:600}
+  .bar{height:6px;border-radius:100px;background:rgba(255,255,255,.12);overflow:hidden}
+  .bar u{display:block;height:100%;width:74%;background:var(--accent);border-radius:100px;text-decoration:none}
+
+  /* ---------- 8. 创始人说明 ---------- */
+  .founder{display:grid;grid-template-columns:200px 1fr;gap:40px;align-items:start;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:36px}
+  @media(max-width:760px){.founder{grid-template-columns:1fr;gap:24px;padding:26px}}
+  .avatar{width:100%;aspect-ratio:1;border-radius:12px;background:linear-gradient(150deg,#e8e2d2,#cfc7b3);
+    display:flex;align-items:center;justify-content:center;color:#8a8371;font-size:12.5px;text-align:center;padding:12px}
+  .founder-txt p{font-size:15px;color:var(--ink-2);margin-bottom:14px}
+  .founder-txt p:last-of-type{margin-bottom:0}
+  .sig{margin-top:20px;font-size:13.5px;color:var(--muted)}
+  .sig b{color:var(--ink);font-weight:600}
+
+  /* ---------- 9. FAQ ---------- */
+  .faq{max-width:760px}
+  details{border-bottom:1px solid var(--line);padding:20px 0}
+  details summary{
+    cursor:pointer;list-style:none;font-size:15.8px;font-weight:600;letter-spacing:-.01em;
+    display:flex;justify-content:space-between;gap:18px;align-items:flex-start;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"+";color:var(--muted);font-weight:400;font-size:20px;line-height:1;flex:0 0 auto}
+  details[open] summary::after{content:"–"}
+  details p{padding-top:12px;font-size:14.6px;color:var(--ink-2);max-width:60ch}
+
+  /* ---------- 10. 底部 CTA ---------- */
+  .final{text-align:center;background:var(--soft);border-top:1px solid var(--line)}
+  .final h2{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.024em;line-height:1.15;font-weight:670;max-width:22em;margin:0 auto}
+  .final p{color:var(--ink-2);margin-top:14px}
+  .final .cta-row{justify-content:center}
+
+  /* ---------- 11. 页脚 ---------- */
+  footer{border-top:1px solid var(--line);padding:36px 0;font-size:13px;color:var(--muted)}
+  .foot-in{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+  .foot-links a{color:var(--muted);text-decoration:none}
+  .foot-links a:hover{color:var(--ink);text-decoration:underline}
+
+  /* ---------- 移动端吸底 CTA ---------- */
+  .sticky-cta{display:none}
+  @media(max-width:720px){
+    .sticky-cta{
+      display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;
+      background:rgba(251,250,247,.96);backdrop-filter:blur(12px);
+      border-top:1px solid var(--line);padding:11px 16px;gap:14px;align-items:center;
+    }
+    .sticky-cta span{font-size:12.5px;color:var(--muted);line-height:1.35}
+    .sticky-cta span b{display:block;color:var(--ink);font-size:13.5px;font-weight:600}
+    .sticky-cta .btn{flex:1;text-align:center;padding:12px 14px;font-size:14.5px}
+    body{padding-bottom:66px}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1. 顶部预售条：三秒内说清"这不是成品" -->
+<div class="topbar">
+  <b>创始用户预售</b><span>·</span>限 50 个名额<span>·</span><b>11 月 30 日前交付</b><span>·</span>不满意全额退款
+</div>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo"><i></i>AutoBrief</div>
+    <a class="nav-cta" href="#price">预订创始名额</a>
+  </div>
+</nav>
+
+<!-- 2. 首屏 -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">为乙方项目经理做的</div>
+      <h1>客户会议开完，<br><em>项目简报已经写好了</em></h1>
+      <p class="sub">把会议录音丢进来，AutoBrief 自动整理成客户能直接读的简报：决议、待办、负责人、时间点，一页交付。不用再花四十分钟回想谁说了什么。</p>
+      <div class="cta-row">
+        <!-- PAYMENT_LINK_START -->
+        <a class="btn btn-p" href="#price">预订创始名额 · $49/首年</a>
+        <!-- PAYMENT_LINK_END -->
+        <a class="btn btn-s" href="#how">看它怎么工作</a>
+      </div>
+      <div class="micro"><span class="dot-live"></span><b>已有 37 人预订</b>，剩 13 个创始名额</div>
+    </div>
+
+    <!-- 产品形态图：CSS 画的示意，上线时建议换成真实截图或设计稿 -->
+    <div class="mock" aria-label="产品界面示意图">
+      <div class="mock-bar"><i></i><i></i><i></i><u></u></div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-h"></div>
+          <div class="mock-line w1"></div>
+          <div class="mock-line w2"></div>
+          <div class="mock-tag">决议与待办</div>
+          <div class="mock-row"><s class="on"></s><em style="width:74%"></em></div>
+          <div class="mock-row"><s class="on"></s><em style="width:61%"></em></div>
+          <div class="mock-row"><s></s><em style="width:82%"></em></div>
+          <div class="mock-row"><s></s><em style="width:54%"></em></div>
+          <div class="mock-line w3" style="margin-top:16px"></div>
+          <div class="mock-line w4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- 3. 问题共鸣：用用户自己的话复述痛点 -->
+<section class="prob">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">开完会那一刻，活才刚开始</h2>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card">
+        <h4>四十分钟的回忆录</h4>
+        <p>会开完了，录音在一个地方，笔记在另一个地方。写纪要要把整段对话再听一遍，还得判断哪句是客户的真需求。</p>
+      </div>
+      <div class="prob-card">
+        <h4>写完了客户不看</h4>
+        <p>发过去三千字的逐字稿，客户回一句"收到"。下次开会，上次的待办还在原地，谁都没动。</p>
+      </div>
+      <div class="prob-card">
+        <h4>待办对不上人</h4>
+        <p>"这个我们跟进一下"——跟进的是谁？什么时候？到交付前一周才发现，有两个承诺没人认领。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 三步上手：不超过三步 -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">三步，从录音到可发送的简报</h2>
+      <p class="sec-p">不需要改掉现有的开会方式，也不需要客户装任何东西。</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h4>上传录音或直接连会议工具</h4>
+        <p>支持 mp3、m4a、wav 上传，也可以授权读取 Zoom / 腾讯会议 / 飞书的录制文件。单次上限 3 小时。</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h4>选一个简报模板</h4>
+        <p>内置「客户周会」「需求评审」「项目复盘」三套结构，也能存自己的模板。决议、待办、风险分开成三块。</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h4>改两句，发出去</h4>
+        <p>生成的是可编辑页面，不是死文本。改完导出 PDF 或直接发链接，客户打开就能看，不用登录。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 前后对比：全页说服力最强的一块 -->
+<section class="cmp">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">同一场会，两种结束方式</h2>
+    </div>
+    <div class="cmp-grid">
+      <div class="cmp-col now">
+        <h4>现在</h4>
+        <ul>
+          <li><i>×</i><span>会后花 30-50 分钟重听录音、整理纪要</span></li>
+          <li><i>×</i><span>发出去的是逐字稿，客户不看，问题还是问题</span></li>
+          <li><i>×</i><span>待办散在聊天记录里，交付前才想起来核对</span></li>
+          <li><i>×</i><span>同一个客户开了五次会，每次都要重新翻上次的结论</span></li>
+        </ul>
+      </div>
+      <div class="cmp-col after">
+        <h4>用了之后</h4>
+        <ul>
+          <li><i>✓</i><span>上传后 3 分钟出初稿，你只做确认和微调</span></li>
+          <li><i>✓</i><span>客户拿到一页结构化的简报，知道要决策什么</span></li>
+          <li><i>✓</i><span>每条待办自动带负责人和截止时间，可导出任务</span></li>
+          <li><i>✓</i><span>同一客户的历次简报自动串成时间线，随时回看承诺</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 能力清单：4-6 项，每项带一个具体细节 -->
+<section>
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">它具体做什么</h2>
+      <p class="sec-p">没有"AI 赋能"这类词，下面每一条都能在界面上点到。</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <h4>区分"客户说的"和"我们承诺的"</h4>
+        <p>自动把对话切成两类：客户的诉求、你的承诺。承诺部分会标出原话时间戳，<b>点一下能跳回录音那一段</b>核对。</p>
+      </div>
+      <div class="feat">
+        <h4>待办自动带归属和日期</h4>
+        <p>从对话里识别负责人和时限，"下周三之前给你"会变成具体日期。识别不出来会留空并提示你补，<b>不会瞎猜</b>。</p>
+      </div>
+      <div class="feat">
+        <h4>风险提示单独一栏</h4>
+        <p>客户提到预算、工期、依赖外部团队的句子会被抽出来放在风险区，开会时有争议的点不会被埋在正文里。</p>
+      </div>
+      <div class="feat">
+        <h4>客户专属时间线</h4>
+        <p>同一个客户的所有简报按时间排在一起，搜索"退款"能看到历次会议里所有相关承诺，不用翻文件夹。</p>
+      </div>
+      <div class="feat">
+        <h4>导出与分发</h4>
+        <p>PDF、Markdown、Notion 页面三种导出。分享链接可设密码和有效期，客户不用注册账号。</p>
+      </div>
+      <div class="feat">
+        <h4>数据不出境可选项</h4>
+        <p>默认走云端转写；对数据敏感的项目可以选择本地处理模式，录音不离开你的设备，代价是速度慢一半。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. 定价与预售：全页最关键，六个要素一个都不能少 -->
+<section class="price-sec" id="price">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">创始用户方案</h2>
+      <p class="sec-p">现在付的是预售款，产品 11 月 30 日前交付。不想要了，随时全额退，不用说明原因。</p>
+    </div>
+    <div class="price-wrap">
+      <div class="price-card">
+        <div class="price-badge">限 50 个名额</div>
+        <div class="price-num"><b>$49</b><span>/ 首年</span></div>
+        <!-- 正式价锚点：必须真实，上线后真的按这个价卖 -->
+        <div class="price-anchor">正式上线后 <s>$96 / 年</s>，创始用户锁定 $49 首年，续费同价不涨。</div>
+        <ul class="price-list">
+          <li><i>✓</i><span>首年全部功能，不限简报数量</span></li>
+          <li><i>✓</i><span>三套内置模板 + 自定义模板</span></li>
+          <li><i>✓</i><span>创始用户专属：需求直接提给我，优先级排在前面</span></li>
+          <li><i>✓</i><span>交付日：2026 年 11 月 30 日前开通账号</span></li>
+          <li><i>✓</i><span>交付前任何时间，一句话全额退款</span></li>
+        </ul>
+        <!-- PAYMENT_LINK_START -->
+        <a class="btn btn-p" href="https://buy.stripe.com/REPLACE_ME">预订创始名额 · $49</a>
+        <!-- PAYMENT_LINK_END -->
+        <div class="guarantee">支持 Stripe 安全支付 · 交付前无条件退款<br>付完会收到一封邮件，里面有我的直接联系方式</div>
+      </div>
+
+      <div class="side-note">
+        <h4>你可能想先确认的几件事</h4>
+        <dl>
+          <div><dt>交付时间</dt><dd>2026 年 11 月 30 日前。如果延期超过 30 天，无条件全额退款，不用你开口。</dd></div>
+          <div><dt>现在能用吗</dt><dd>不能。现在是预售，付完会拿到一个内测通道，开发过程中随时能进去看进度。</dd></div>
+          <div><dt>和通用转写工具有什么不一样</dt><dd>它们给你逐字稿，AutoBrief 给你一页能直接发给客户的简报。转写是中间步骤，不是交付物。</dd></div>
+          <div><dt>录音安全</dt><dd>传输和存储全程加密，不用于训练模型，可随时删除。敏感项目可选本地处理模式。</dd></div>
+        </dl>
+        <div class="slots">
+          <div class="slots-top"><span>已预订 <b>37</b> / 50</span><span>剩 13 个</span></div>
+          <div class="bar"><u></u></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. 创始人说明：预售阶段唯一的信任源 -->
+<section>
+  <div class="wrap">
+    <div class="founder">
+      <!-- 换成真人照片，手机自拍也行，比插画可信 -->
+      <div class="avatar">换成你的照片<br>（真人，别用插画）</div>
+      <div class="founder-txt">
+        <p>我在一家乙方公司做了六年项目交付，每周至少三场客户会。最烦的不是开会，是开完会写纪要——明明刚聊完，还得花四十分钟把话重新捋一遍，捋完客户还不看。</p>
+        <p>去年我给自己写了个小脚本，把录音转成固定结构的简报，用了半年，团队里三个人都开始用。所以我想把它做成正式的产品，而不是一个只有我会用的脚本。</p>
+        <p>现在还没做完。转写和结构化已经跑通了，界面还很粗糙，客户时间线那块正在做。我先把预售开出来，是因为我需要知道有多少人真的需要它——而不是做完了发一篇没人转发的推文。</p>
+        <p>付了钱之后你可以直接给我发邮件，骂我也行。我会一封一封回。</p>
+        <div class="sig">— <b>你的名字</b>，AutoBrief 作者 · <a href="mailto:hi@example.com" style="color:inherit">hi@example.com</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ：作用是拆掉付款前最后一道犹豫 -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-top">
+      <h2 class="sec-h">常见问题</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>付了钱，但产品最后没做出来怎么办？</summary>
+        <p>全额退款，不需要你提醒。预售款我一直留作退款准备金，没有预支到别的地方。这句话写在这里，是给自己上一个约束。</p>
+      </details>
+      <details>
+        <summary>支持中文会议吗？方言呢？</summary>
+        <p>中文普通话识别已经比较稳。粤语、四川话这类方言目前准确率会降，建议在创建项目时标注"方言场景"，我会针对这类录音单独调，创始用户可以优先提交样本。</p>
+      </details>
+      <details>
+        <summary>和飞书妙记、通义听悟有什么区别？</summary>
+        <p>它们解决"把话变成文字"。AutoBrief 解决"把文字变成客户愿意读、并且能追踪承诺的简报"。如果你只需要逐字稿，用它们更划算，不用买我这个。</p>
+      </details>
+      <details>
+        <summary>一个账号能给几个人用？</summary>
+        <p>创始方案是单席位。团队版在计划里，创始用户可以按同样的 $49/人 追加席位，不用等团队版上线。</p>
+      </details>
+      <details>
+        <summary>我的会议录音会被用来训练模型吗？</summary>
+        <p>不会，合同层面也不会。录音只用于生成你这一次的简报，你可以随时在设置里删除，删除是硬删除，不留备份。</p>
+      </details>
+      <details>
+        <summary>为什么是首年 $49，而不是按月订阅？</summary>
+        <p>因为现在是预售，按月收钱对你不公平——产品还不完整。首年一次性收，我把交付责任担下来；等产品稳定了再改月付。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. 底部 CTA：和首屏一致 -->
+<section class="final">
+  <div class="wrap">
+    <h2>如果每次开完会你都在做同一件苦活，这个工具就是为你做的</h2>
+    <p>50 个创始名额，剩 13 个。11 月 30 日前交付，不满意全额退。</p>
+    <div class="cta-row">
+      <!-- PAYMENT_LINK_START -->
+      <a class="btn btn-p" href="https://buy.stripe.com/REPLACE_ME">预订创始名额 · $49/首年</a>
+      <!-- PAYMENT_LINK_END -->
+      <a class="btn btn-s" href="mailto:hi@example.com">先问个问题</a>
+    </div>
+  </div>
+</section>
+
+<!-- 11. 页脚：预售阶段这三样反而是可信度信号 -->
+<footer>
+  <div class="wrap foot-in">
+    <div>© 2026 AutoBrief · 由一个人在做</div>
+    <div class="foot-links">
+      <a href="mailto:hi@example.com">hi@example.com</a>
+      <a href="#">隐私政策</a>
+      <a href="#">服务条款</a>
+      <a href="#">退款政策</a>
+    </div>
+  </div>
+</footer>
+
+<!-- 移动端吸底 CTA -->
+<div class="sticky-cta">
+  <span><b>$49 / 首年</b>剩 13 个名额</span>
+  <a class="btn btn-p" href="https://buy.stripe.com/REPLACE_ME">预订</a>
+</div>
+
+<script>
+  // 埋点桩：把这三个事件接到你的统计工具（Plausible / Umami / GA4）
+  // 判断"文案问题"还是"流量问题"，只看这三个数就够。
+  function track(name, props){
+    // 示例：window.plausible && window.plausible(name, {props: props});
+    console.log('[track]', name, props || {});
+  }
+  track('pageview');
+
+  // 滚动深度
+  var fired50 = false, fired100 = false;
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? window.scrollY / h : 0;
+    if (p >= .5 && !fired50){ fired50 = true; track('scroll_50'); }
+    if (p >= .95 && !fired100){ fired100 = true; track('scroll_100'); }
+  }, {passive:true});
+
+  // CTA 点击
+  document.querySelectorAll('a[href^="https://buy"], a[href="#price"]').forEach(function(a){
+    a.addEventListener('click', function(){ track('cta_click', {text: a.textContent.trim()}); });
+  });
+
+  // 价格区曝光
+  var priceSec = document.getElementById('price');
+  if (priceSec && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ track('price_view'); io.disconnect(); } });
+    }, {threshold:.35});
+    io.observe(priceSec);
+  }
+</script>
+</body>
+</html>
