@@ -73,3 +73,9 @@ Exit code `0` means publishable (possibly with warnings); `1` means hard failure
 ## Origin
 
 Extracted from a personal WorkBuddy skill library and cleaned for public release: machine-specific absolute paths were replaced with portable ones, backup and build artifacts were excluded, and no credentials are included.
+
+## Companion site
+
+For the background, the checks this framework grew out of and its intended reader, see [WorkBuddy Central: Presale Validation](https://workbuddycentral.com/presale-validation/). This repository holds the framework and the landing-page template; the site explains why they were put together.
+
+WorkBuddy Central is an independent, unofficial documentation site, not affiliated with WorkBuddy or Tencent.
